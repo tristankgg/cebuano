@@ -277,7 +277,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1rem;
+            gap: 1.5rem;
             margin-bottom: 2rem;
             padding: 1rem;
             background: rgba(255, 255, 255, 0.05);
@@ -545,21 +545,22 @@
         }
         
         .reset-button { 
-            padding: 0.8rem 2rem; 
+            padding: 0.8rem 1.5rem; 
             background: linear-gradient(135deg, #FF6B9D 0%, #FF8066 100%);
             color: white; 
             border: none; 
             border-radius: 12px; 
             cursor: pointer; 
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-family: 'Poppins', sans-serif;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+            box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+            white-space: nowrap;
         }
         .reset-button:hover { 
             transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(255, 107, 157, 0.4);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
         }
 
         /* Category Section Boxes */
@@ -904,6 +905,7 @@
         <div class="global-counter-container">
             <span class="global-counter-label">Total Words Selected:</span>
             <div class="global-counter-display" id="globalCounter">0</div>
+            <button class="reset-button" onclick="resetAll()">↻ Master Reset</button>
         </div>
 
         <!-- Toggle Switch -->
@@ -925,10 +927,6 @@
         </div>
         <div id="searchMessage" class="search-message"></div>
 
-        <div class="controls">
-            <button class="reset-button" onclick="resetAll()">↻ Master Reset</button>
-        </div>
-
         <div id="categories"></div>
 
         <!-- Footer Section -->
@@ -947,7 +945,7 @@
     <script>
         const gradients = ['grad-1', 'grad-2', 'grad-3', 'grad-4', 'grad-5', 'grad-6', 'grad-7', 'grad-8', 'grad-9', 'grad-10', 'grad-11', 'grad-12'];
         
-        let languageMode = 'en'; // 'en' = English first, 'ce' = Cebuano first
+        let languageMode = 'en';
         let isDarkTheme = true;
 
         function toggleTheme() {
