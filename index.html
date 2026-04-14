@@ -751,7 +751,13 @@
 
         function toggle(id, idx) {
             const key = `${id}-${idx}`;
-            flipped[key] = !flipped[key];
+            if (flipped[key]) {
+                // If already flipped, delete it to deselect
+                delete flipped[key];
+            } else {
+                // If not flipped, set it to true
+                flipped[key] = true;
+            }
             render();
         }
 
