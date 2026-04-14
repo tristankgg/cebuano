@@ -14,9 +14,10 @@
             padding: 1.5rem; 
             color: #fff;
         }
-        .container { max-width: 600px; margin: 0 auto; }
+        .container { max-width: 700px; margin: 0 auto; }
+        
         .header { 
-            margin-bottom: 2.5rem; 
+            margin-bottom: 2rem; 
             text-align: center;
         }
         .header h1 { 
@@ -33,6 +34,47 @@
             color: #aaa; 
             font-family: 'Inter', sans-serif;
         }
+        
+        /* Navigation Menu */
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2.5rem;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            justify-content: center;
+        }
+        
+        .nav-btn {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(135deg, #FF6B9D 0%, #FF8066 100%);
+            border-color: transparent;
+            box-shadow: 0 6px 16px rgba(255, 107, 157, 0.3);
+        }
+
         .controls {
             display: flex;
             justify-content: center;
@@ -56,20 +98,37 @@
             transform: translateY(-2px);
             box-shadow: 0 12px 28px rgba(255, 107, 157, 0.4);
         }
-        .category-section { margin-bottom: 2.5rem; }
+
+        /* Category Section Boxes */
+        .category-section { 
+            margin-bottom: 2.5rem;
+            padding: 1.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .category-section:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
         .category-title { 
-            font-size: 1.1rem; 
-            font-weight: 600; 
-            margin-bottom: 1rem;
+            font-size: 1.3rem; 
+            font-weight: 700; 
+            margin-bottom: 1.2rem;
             text-transform: uppercase; 
             letter-spacing: 1px;
             color: #fff;
         }
+
         .words-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
             gap: 1rem;
         }
+
         .word-card { 
             padding: 1.2rem 1rem; 
             background: rgba(255, 255, 255, 0.05);
@@ -87,12 +146,14 @@
             font-family: 'Poppins', sans-serif;
             color: #fff;
         }
+
         .word-card:hover:not(.flipped) { 
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-4px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
+
         .word-card.flipped { 
             color: white;
             border: none;
@@ -116,6 +177,9 @@
 
         @media (max-width: 600px) { 
             .header h1 { font-size: 2rem; }
+            .nav-menu { gap: 0.5rem; padding: 1rem; }
+            .nav-btn { padding: 0.5rem 0.9rem; font-size: 0.75rem; }
+            .category-section { padding: 1.2rem; }
             .words-grid { gap: 0.75rem; }
             .word-card { 
                 padding: 1rem 0.75rem; 
@@ -132,6 +196,8 @@
             <h1>Cebuano Vocabulary</h1>
             <p>Learn essential Cebuano words</p>
         </div>
+
+        <div class="nav-menu" id="navMenu"></div>
 
         <div class="controls">
             <button class="reset-button" onclick="resetAll()">↻ Reset All</button>
@@ -185,6 +251,30 @@
         };
 
         const flipped = {};
+        let activeSection = null;
+
+        function buildNav() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.innerHTML = data.categories.map((cat, idx) => 
+                `<button class="nav-btn" onclick="jumpToSection('${cat.id}', ${idx})">${cat.name}</button>`
+            ).join('');
+        }
+
+        function jumpToSection(id, idx) {
+            activeSection = id;
+            updateNavActive(idx);
+            const element = document.getElementById(`section-${id}`);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function updateNavActive(idx) {
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach((btn, i) => {
+                btn.classList.toggle('active', i === idx);
+            });
+        }
 
         function toggle(id, idx) {
             const key = `${id}-${idx}`;
@@ -199,7 +289,7 @@
 
         function render() {
             const html = data.categories.map(cat => `
-                <div class="category-section">
+                <div class="category-section" id="section-${cat.id}">
                     <h2 class="category-title">${cat.name}</h2>
                     <div class="words-grid">
                         ${cat.words.map((w, i) => {
@@ -215,6 +305,7 @@
             document.getElementById('categories').innerHTML = html;
         }
 
+        buildNav();
         render();
     </script>
 </body>
