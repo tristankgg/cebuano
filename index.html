@@ -4,100 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cebuano Vocabulary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; padding: 1rem; }
-        .container { max-width: 500px; margin: 0 auto; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-        h1 { font-size: 28px; color: #333; }
-        .reset-button { padding: 0.6rem 1rem; background: #FF6B6B; color: white; border: none; border-radius: 8px; cursor: pointer; }
-        .reset-button:hover { opacity: 0.9; }
-        .category-section { margin-bottom: 2rem; }
-        .category-title { font-size: 16px; font-weight: 500; margin: 0 0 1rem 0; text-transform: uppercase; }
-        .words-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
-        .word-card { padding: 1.5rem 1rem; background: white; border: 2px solid; border-radius: 12px; cursor: pointer; font-size: 16px; font-weight: 500; min-height: 100px; display: flex; align-items: center; justify-content: center; text-align: center; transition: all 0.3s; }
-        .word-card:hover:not(.flipped) { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .word-card.flipped { box-shadow: 0 4px 12px rgba(0,0,0,0.15); color: white; }
-        @media (max-width: 600px) { h1 { font-size: 24px; } .word-card { font-size: 14px; padding: 1rem 0.75rem; } }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); 
+            min-height: 100vh; 
+            padding: 1.5rem; 
+            color: #fff;
+        }
+        .container { max-width: 600px; margin: 0 auto; }
+        .header { 
+            margin-bottom: 2.5rem; 
+            text-align: center;
+        }
+        .header h1 { 
+            font-size: 2.5rem; 
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FF6B9D 0%, #FFC75F 50%, #845EC2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p { 
+            font-size: 0.95rem; 
+            color: #aaa; 
+            font-family: 'Inter', sans-serif;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+        .reset-button { 
+            padding: 0.8rem 2rem; 
+            background: linear-gradient(135deg, #FF6B9D 0%, #FF8066 100%);
+            color: white; 
+            border: none; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: 600;
+            font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
+        }
+        .reset-button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(255, 107, 157, 0.4);
+        }
+        .category-section { margin-bottom: 2.5rem; }
+        .category-title { 
+            font-size: 1.1rem; 
+            font-weight: 600; 
+            margin-bottom: 1rem;
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            color: #fff;
+        }
+        .words-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 1rem;
+        }
+        .word-card { 
+            padding: 1.2rem 1rem; 
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px; 
+            cursor: pointer; 
+            font-size: 0.95rem; 
+            font-weight: 600;
+            min-height: 110px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+        }
+        .word-card:hover:not(.flipped) { 
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .word-card.flipped { 
+            color: white;
+            border: none;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+            transform: scale(1.02);
+        }
+        
+        /* Gradient backgrounds for flipped cards */
+        .word-card.flipped.grad-1 { background: linear-gradient(135deg, #FF6B9D 0%, #FF8066 100%); }
+        .word-card.flipped.grad-2 { background: linear-gradient(135deg, #FFC75F 0%, #FFD464 100%); }
+        .word-card.flipped.grad-3 { background: linear-gradient(135deg, #845EC2 0%, #B39DDB 100%); }
+        .word-card.flipped.grad-4 { background: linear-gradient(135deg, #00D2FC 0%, #3A86FF 100%); }
+        .word-card.flipped.grad-5 { background: linear-gradient(135deg, #29FFC6 0%, #20C997 100%); }
+        .word-card.flipped.grad-6 { background: linear-gradient(135deg, #FF9671 0%, #FFC75F 100%); }
+        .word-card.flipped.grad-7 { background: linear-gradient(135deg, #F15BB5 0%, #FF6B9D 100%); }
+        .word-card.flipped.grad-8 { background: linear-gradient(135deg, #00BCD4 0%, #4DD0E1 100%); }
+        .word-card.flipped.grad-9 { background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%); }
+        .word-card.flipped.grad-10 { background: linear-gradient(135deg, #10B981 0%, #34D399 100%); }
+        .word-card.flipped.grad-11 { background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%); }
+        .word-card.flipped.grad-12 { background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%); }
+
+        @media (max-width: 600px) { 
+            .header h1 { font-size: 2rem; }
+            .words-grid { gap: 0.75rem; }
+            .word-card { 
+                padding: 1rem 0.75rem; 
+                font-size: 0.85rem; 
+                min-height: 95px;
+            }
+            .reset-button { padding: 0.7rem 1.5rem; font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Cebuano Words</h1>
-            <button class="reset-button" onclick="resetAll()">↻ Reset</button>
+            <h1>Cebuano Vocabulary</h1>
+            <p>Learn essential Cebuano words</p>
         </div>
-        <div id="categories"></div>
-    </div>
-
-    <script>
-        const data = {
-            categories: [
-                {id: 'greetings', name: 'Greetings & Phrases', color: '#FF6B6B', words: [
-                    {e: "What's your job?", c: 'Unsay imong trabaho?'}, {e: "What's wrong?", c: 'Unsay problema?'}, {e: 'Are you sure?', c: 'Sure ka?'}, {e: 'Are you ready?', c: 'Ready naka?'}, {e: 'Forgive me', c: 'Pasaylo-a ko'}, {e: 'See you later', c: 'Kita ta sa sunod'}, {e: 'Good luck', c: 'Maayong swerte'}
-                ]},
-                {id: 'family', name: 'Family Members', color: '#4ECDC4', words: [
-                    {e: 'Grandparent', c: 'Apohang'}, {e: 'Aunt', c: 'Iyaan (tiya)'}, {e: 'Uncle', c: 'Uyoan (tiyo)'}, {e: 'Cousin', c: 'Ig-agaw'}, {e: 'Older sibling', c: 'Magulang'}, {e: 'Younger sibling', c: 'Manghody'}, {e: 'Friend', c: 'Higala'}
-                ]},
-                {id: 'house', name: 'House & Building', color: '#95E1D3', words: [
-                    {e: 'Window', c: 'Bentana'}, {e: 'Door', c: 'Pwerта'}, {e: 'Wall', c: 'Dingding'}, {e: 'Stair', c: 'Hagdan'}, {e: 'Porch', c: 'Balkon'}, {e: 'Floor', c: 'Salog'}, {e: 'Roof', c: 'Atop'}, {e: 'Kitchen', c: 'Kusina'}
-                ]},
-                {id: 'food', name: 'Food & Dining', color: '#F9A825', words: [
-                    {e: 'Meat', c: 'Karne'}, {e: 'Cheese', c: 'Keso'}, {e: 'Soup', c: 'Sabaw'}, {e: 'Bread', c: 'Tinapay'}, {e: 'Breakfast', c: 'Pamahaw'}, {e: 'Lunch', c: 'Paniudto'}, {e: 'Dinner', c: 'Panihapon'}, {e: 'Coffee', c: 'Kape'}
-                ]},
-                {id: 'vegetables', name: 'Fruits & Vegetables', color: '#38B000', words: [
-                    {e: 'Potatoes', c: 'Patatas'}, {e: 'Sweet potato', c: 'Kamote'}, {e: 'Tomatoes', c: 'Kamatiso'}, {e: 'Onions', c: 'Sibuyaso'}, {e: 'Apples', c: 'Mansana'}, {e: 'Bananas', c: 'Sagin'}, {e: 'Mango', c: 'Mango'}, {e: 'Pineapple', c: 'Pina'}
-                ]},
-                {id: 'animals', name: 'Animals & Insects', color: '#FF8C42', words: [
-                    {e: 'Horse', c: 'Kabayo'}, {e: 'Goat', c: 'Kanding'}, {e: 'Duck', c: 'Itik'}, {e: 'Fly', c: 'Langaw'}, {e: 'Mosquito', c: 'Lamok'}, {e: 'Bee', c: 'Buyog'}, {e: 'Frog', c: 'Baki'}, {e: 'Chicken', c: 'Manok'}
-                ]},
-                {id: 'verbs', name: 'Common Verbs', color: '#A355FF', words: [
-                    {e: 'To study', c: 'Magtuon'}, {e: 'To sleep', c: 'Matulog'}, {e: 'To teach', c: 'Magtudlo'}, {e: 'To walk', c: 'Maglakaw'}, {e: 'To arrive', c: 'Moabot'}, {e: 'To attend', c: 'Motambong'}, {e: 'To leave', c: 'Moadto'}, {e: 'To come back', c: 'Mobalik'}
-                ]},
-                {id: 'colors', name: 'Colors', color: '#FF1493', words: [
-                    {e: 'White', c: 'Puti'}, {e: 'Black', c: 'Itom'}, {e: 'Red', c: 'Pula'}, {e: 'Blue', c: 'Asul'}, {e: 'Yellow', c: 'Dilaw'}, {e: 'Purple', c: 'Lila'}, {e: 'Orange', c: 'Kahel'}, {e: 'Green', c: 'Berde'}
-                ]},
-                {id: 'body', name: 'Body Parts', color: '#E74C3C', words: [
-                    {e: 'Head', c: 'Ulo'}, {e: 'Nose', c: 'Ilong'}, {e: 'Eyes', c: 'Mata'}, {e: 'Ears', c: 'Tainga'}, {e: 'Mouth', c: 'Baba'}, {e: 'Teeth', c: 'Ngipen'}, {e: 'Hand', c: 'Kamay'}, {e: 'Foot', c: 'Paa'}
-                ]},
-                {id: 'numbers', name: 'Numbers', color: '#3498DB', words: [
-                    {e: 'One', c: 'Usa'}, {e: 'Two', c: 'Duha'}, {e: 'Three', c: 'Tulo'}, {e: 'Four', c: 'Upat'}, {e: 'Five', c: 'Lima'}, {e: 'Six', c: 'Anim'}, {e: 'Seven', c: 'Pito'}, {e: 'Eight', c: 'Walo'}
-                ]}
-            ]
-        };
-
-        const flipped = {};
-
-        function toggle(id, idx) {
-            const key = `${id}-${idx}`;
-            flipped[key] = !flipped[key];
-            render();
-        }
-
-        function resetAll() {
-            Object.keys(flipped).forEach(k => delete flipped[k]);
-            render();
-        }
-
-        function render() {
-            const html = data.categories.map(cat => `
-                <div class="category-section">
-                    <h2 class="category-title" style="color:${cat.color}">${cat.name}</h2>
-                    <div class="words-grid">
-                        ${cat.words.map((w, i) => {
-                            const key = `${cat.id}-${i}`;
-                            const isFlipped = flipped[key];
-                            return `<button class="word-card ${isFlipped ? 'flipped' : ''}" 
-                                style="border-color:${cat.color};background:${isFlipped ? cat.color : 'white'};color:${isFlipped ? 'white' : 'inherit'}"
-                                onclick="toggle('${cat.id}', ${i})">${isFlipped ? w.c : w.e}</button>`;
-                        }).join('')}
-                    </div>
-                </div>
-            `).join('');
-            document.getElementById('categories').innerHTML = html;
-        }
-
-        render();
-    </script>
-</body>
-</html>
