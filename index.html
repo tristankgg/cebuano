@@ -35,8 +35,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            word-spacing: 100vw;
-            padding-right: 3rem;
         }
         .header p { 
             font-size: 0.95rem; 
@@ -46,11 +44,8 @@
         
         /* Theme Toggle Button */
         .theme-toggle {
-            position: fixed;
-            top: 1.5rem;
-            right: 1.5rem;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.2);
@@ -61,7 +56,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            z-index: 1000;
+            flex-shrink: 0;
         }
 
         .theme-toggle:hover {
@@ -79,6 +74,39 @@
         body.light-theme .theme-toggle:hover {
             background: rgba(0, 0, 0, 0.2);
             border-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Header Container */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .header-container:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        body.light-theme .header-container {
+            background: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .header-container:hover {
+            background: rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .header-content {
+            flex: 1;
         }
 
         /* Light theme adjustments */
@@ -463,6 +491,8 @@
 
         @media (max-width: 600px) { 
             .header h1 { font-size: 2rem; }
+            .header-container { flex-direction: column; align-items: flex-start; padding: 1.2rem; }
+            .theme-toggle { align-self: flex-end; margin-top: -3rem; }
             .toggle-container { flex-direction: column; gap: 0.8rem; }
             .nav-menu { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; padding: 0.8rem; }
             .nav-btn { padding: 0.8rem; min-height: 95px; font-size: 0.7rem; gap: 0.5rem; }
@@ -481,13 +511,14 @@
 </head>
 <body>
     <div class="container">
-        <!-- Theme Toggle Button -->
-        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
-
-        <div class="header" id="header">
-            <h1>Cebuano Vocabulary</h1>
-            <p style="font-size: 0.9rem; color: #888; margin-top: 0.3rem; margin-bottom: 1rem;">by Tristan Gallagher</p>
-            <p>Learn essential Cebuano words</p>
+        <!-- Header with Theme Toggle -->
+        <div class="header-container">
+            <div class="header-content" id="header">
+                <h1>Cebuano Vocabulary</h1>
+                <p style="font-size: 0.9rem; color: #888; margin-top: 0.3rem; margin-bottom: 1rem;">by Tristan Gallagher</p>
+                <p>Learn essential Cebuano words</p>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
         </div>
 
         <!-- Toggle Switch -->
@@ -581,7 +612,7 @@
                     {e: 'Chicken', c: 'ma-nok'}, {e: 'Cow', c: 'Ba-ka'}, {e: 'Horse', c: 'Ka-bayo'}, {e: 'Snake', c: 'bi-tin'}, {e: 'Bird', c: 'lang-gam'}, {e: 'Sheep', c: 'Kar-nero'}, {e: 'Goat', c: 'Kan-Ding'}, {e: 'Mosquito', c: 'La-mok'}, {e: 'Fly', c: 'Langaw'}, {e: 'Duck', c: 'Pato'}
                 ]},
                 {id: 'weather', name: 'Weather', icon: '⛅', gradIdx: 8, words: [
-                    {e: 'Hot', c: 'in-it'}, {e: 'Cold', c: 'bug-naw'}, {e: 'Bright', c: 'hay-ag'}, {e: 'Dark', c: 'ngit-ngit'}
+                    {e: 'Weather', c: 'Panahon'}, {e: 'Rain', c: 'Ulan'}, {e: 'Hot', c: 'Init'}, {e: 'Cold', c: 'Tugnaw'}, {e: 'Storm', c: 'Bagyo'}, {e: 'Wind', c: 'Hangin'}, {e: 'Fog', c: 'Gabon'}, {e: 'Flood', c: 'Baha'}, {e: 'Lightning', c: 'Kilat'}, {e: 'Thunder', c: 'Dalugdog'}, {e: 'Cloudy', c: 'Gabonon'}, {e: 'Sunny', c: 'Silaw'}, {e: 'Drizzle', c: 'Taligsik'}, {e: 'Showers', c: 'Ulan-ulan'}, {e: 'Breeze', c: 'Huyuhoy'}, {e: 'Heavy rain', c: 'Tigiti'}, {e: 'Humid', c: 'Alimuot'}, {e: 'Drought', c: 'Tughabang'}, {e: 'Rainbow', c: 'Balangaw'}, {e: 'Earthquake', c: 'Linog'}
                 ]},
                 {id: 'question', name: 'Question Words', icon: '❓', gradIdx: 9, words: [
                     {e: 'Who?', c: 'kin-sa'}, {e: 'What', c: 'un-sa'}, {e: 'When?', c: 'kanus-a'}, {e: 'Where?', c: 'ar-sa'}, {e: 'Why?', c: 'ng-a-no'}, {e: 'How', c: 'unsa-on'}, {e: 'Maybe', c: 'Ba-sin'}
@@ -591,6 +622,24 @@
                 ]},
                 {id: 'emotions', name: 'Emotions & States', icon: '😊', gradIdx: 11, words: [
                     {e: 'Happy', c: 'Masaya'}, {e: 'Sad', c: 'Lungag'}, {e: 'Angry', c: 'Galit'}, {e: 'Tired', c: 'Lubang'}, {e: 'Afraid', c: 'Takot'}, {e: 'Excited', c: 'Kugihan'}, {e: 'Sleepy', c: 'Antok'}
+                ]},
+                {id: 'bodyparts', name: 'Body Parts', icon: '👤', gradIdx: 0, words: [
+                    {e: 'Head', c: 'Ulo'}, {e: 'Face', c: 'Nawong'}, {e: 'Eye', c: 'Mata'}, {e: 'Nose', c: 'Ilong'}, {e: 'Ear', c: 'Dalunggan'}, {e: 'Mouth', c: 'Baba'}, {e: 'Tooth', c: 'Ngipon'}, {e: 'Neck', c: 'Liog'}, {e: 'Shoulder', c: 'Abaga'}, {e: 'Arm', c: 'Bukton'}, {e: 'Elbow', c: 'Siko'}, {e: 'Hand', c: 'Kamot'}, {e: 'Finger', c: 'Tudlo'}, {e: 'Fingernail', c: 'Kuko'}, {e: 'Chest', c: 'Dughan'}, {e: 'Stomach', c: 'Tiyan'}, {e: 'Back', c: 'Likod'}, {e: 'Waist', c: 'Hawak'}, {e: 'Knee', c: 'Tuhod'}, {e: 'Foot', c: 'Tiil'}
+                ]},
+                {id: 'clothing', name: 'Clothing', icon: '👔', gradIdx: 1, words: [
+                    {e: 'Dress', c: 'Sinina'}, {e: 'T-shirt', c: 'Kamiseta'}, {e: 'Pants', c: 'Karsones'}, {e: 'Shorts', c: 'Sayyort'}, {e: 'Skirt', c: 'Palda'}, {e: 'Blouse', c: 'Blawos'}, {e: 'Coat', c: 'Amerikana'}, {e: 'House dress', c: 'Daster'}, {e: 'Hat', c: 'Kalo'}, {e: 'Shoes', c: 'Sapatos'}, {e: 'Slippers', c: 'Tsinelas'}, {e: 'Socks', c: 'Medyas'}, {e: 'Barong', c: 'Barong'}, {e: 'Collar', c: 'Kwelyo'}, {e: 'Undershirt', c: 'Kamisadentro'}, {e: 'Bra', c: 'Brassiere'}, {e: 'Briefs', c: 'Karsonsilyo'}, {e: 'Belt', c: 'Bakbak'}, {e: 'Jacket', c: 'Jaket'}
+                ]},
+                {id: 'nature', name: 'Nature', icon: '🌿', gradIdx: 2, words: [
+                    {e: 'Nature', c: 'Kinaiyahan'}, {e: 'Mountain', c: 'Bukid'}, {e: 'Sea', c: 'Dagat'}, {e: 'Earth', c: 'Yuta'}, {e: 'Water', c: 'Tubig'}, {e: 'Sky', c: 'Langit'}, {e: 'Tree', c: 'Kahoy'}, {e: 'Rain', c: 'Uwan'}, {e: 'Wind', c: 'Hangin'}, {e: 'Sun', c: 'Adlaw'}, {e: 'Moon', c: 'Buwan'}, {e: 'Star', c: 'Bitoon'}, {e: 'River', c: 'Suba'}, {e: 'Beach', c: 'Baybayon'}, {e: 'Rock', c: 'Bato'}, {e: 'Cloud', c: 'Panganod'}, {e: 'Leaf', c: 'Dahon'}, {e: 'Rainbow', c: 'Balangaw'}, {e: 'Flower', c: 'Bulak'}, {e: 'Stream', c: 'Sapa'}
+                ]},
+                {id: 'kitchen', name: 'Objects: Kitchen', icon: '🍳', gradIdx: 3, words: [
+                    {e: 'Plate', c: 'Plato'}, {e: 'Spoon', c: 'Kutsara'}, {e: 'Fork', c: 'Tinidor'}, {e: 'Knife', c: 'Kutsilyo'}, {e: 'Glass', c: 'Baso'}, {e: 'Bowl', c: 'Yahong'}, {e: 'Pot', c: 'Kaldero'}, {e: 'Frying Pan', c: 'Kalaha'}, {e: 'Stove', c: 'Kalan'}, {e: 'Cutting Board', c: 'Tadtaran'}, {e: 'Spatula', c: 'Likwat'}, {e: 'Bottle Opener', c: 'Abridor'}, {e: 'Trash Can', c: 'Basurahan'}, {e: 'Refrigerator', c: 'Pridyerider'}, {e: 'Dish Rack', c: 'Banggera'}, {e: 'Teaspoon', c: 'Kutsarita'}
+                ]},
+                {id: 'bedroom', name: 'Objects: Bedroom', icon: '🛏️', gradIdx: 4, words: [
+                    {e: 'Bed', c: 'Kama'}, {e: 'Pillow', c: 'Unlan'}, {e: 'Blanket', c: 'Habol'}, {e: 'Mattress', c: 'Kutson'}, {e: 'Pillowcase', c: 'Sobrefunda'}, {e: 'Sheet', c: 'Kumot'}, {e: 'Wardrobe', c: 'Aparador'}, {e: 'Dresser', c: 'Komoda'}, {e: 'Mirror', c: 'Salamin'}, {e: 'Lamp', c: 'Lampara'}, {e: 'Nightstand', c: 'Tesa'}, {e: 'Curtain', c: 'Kortina'}, {e: 'Electric Fan', c: 'Bentilador'}, {e: 'Air Conditioner', c: 'Aircon'}, {e: 'Hanger', c: 'Hanger'}, {e: 'Clothes', c: 'Bisti'}, {e: 'Slippers', c: 'Tsinelas'}, {e: 'Rug', c: 'Trapo'}, {e: 'Alarm Clock', c: 'Relo'}
+                ]},
+                {id: 'livingroom', name: 'Objects: Living Room', icon: '🛋️', gradIdx: 5, words: [
+                    {e: 'Sofa', c: 'Sopa'}, {e: 'Table', c: 'Lamisa'}, {e: 'Chair', c: 'Lingkuranan'}, {e: 'Television', c: 'Telebisyon'}, {e: 'Fan', c: 'Bentilador'}, {e: 'Light', c: 'Suga'}, {e: 'Curtains', c: 'Kurtina'}, {e: 'Cabinet', c: 'Kabinet'}, {e: 'Rug', c: 'Alpombra'}, {e: 'Picture Frame', c: 'Kwadro'}, {e: 'Flower Vase', c: 'Plorera'}, {e: 'Cushion', c: 'Unlan'}, {e: 'Wall Clock', c: 'Orasan sa bungbong'}, {e: 'Broom', c: 'Silhig'}, {e: 'Dustpan', c: 'Pandot'}, {e: 'Speaker', c: 'Spiker'}, {e: 'Center Table', c: 'Gamay nga lamisa'}, {e: 'Sofa Covers', c: 'Hapin sa sopa'}, {e: 'Door', c: 'Purtahan'}
                 ]}
             ]
         };
@@ -659,7 +708,7 @@
             const html = data.categories.map(cat => `
                 <div class="category-section" id="section-${cat.id}">
                     <div class="category-header">
-                        <h2 class="category-title">${cat.name}</h2>
+                        <h2 class="category-title">${cat.icon} ${cat.name}</h2>
                         <div class="section-controls">
                             <button class="section-btn" onclick="resetSection('${cat.id}')" title="Reset this section">↻</button>
                             <button class="section-btn" onclick="returnToTop()" title="Return to top">↑</button>
