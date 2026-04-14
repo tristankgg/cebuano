@@ -542,8 +542,9 @@
 
         @media (max-width: 600px) { 
             .header h1 { font-size: 2rem; }
-            .header-container { flex-direction: column; align-items: flex-start; padding: 1.2rem; }
-            .theme-toggle { align-self: flex-end; margin-top: -3rem; }
+            .header-container { position: relative; flex-direction: column; align-items: flex-start; padding: 1.2rem; padding-top: 3.5rem; }
+            .header-right { position: absolute; top: 1rem; right: 1.2rem; flex-direction: column; align-items: center; gap: 0.2rem; }
+            .theme-toggle { margin-top: 0; }
             .toggle-container { flex-direction: column; gap: 0.8rem; }
             .nav-menu { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; padding: 0.8rem; }
             .nav-btn { padding: 0.8rem; min-height: 95px; font-size: 0.7rem; gap: 0.5rem; }
@@ -571,7 +572,7 @@
             </div>
             <div class="header-right">
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
-                <div class="version-badge">v0.21</div>
+                <div class="version-badge">v0.22</div>
             </div>
         </div>
 
