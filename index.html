@@ -1,34 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Interactive mobile-friendly Cebuano vocabulary learning app"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cebuano Vocabulary</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-          sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      html, body, #root {
-        width: 100%;
-        height: 100%;
-      }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; padding: 1rem; }
+        .container { max-width: 500px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        h1 { font-size: 28px; color: #333; }
+        .reset-button { padding: 0.6rem 1rem; background: #FF6B6B; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .reset-button:hover { opacity: 0.9; }
+        .category-section { margin-bottom: 2rem; }
+        .category-title { font-size: 16px; font-weight: 500; margin: 0 0 1rem 0; text-transform: uppercase; }
+        .words-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+        .word-card { padding: 1.5rem 1rem; background: white; border: 2px solid; border-radius: 12px; cursor: pointer; font-size: 16px; font-weight: 500; min-height: 100px; display: flex; align-items: center; justify-content: center; text-align: center; transition: all 0.3s; }
+        .word-card:hover:not(.flipped) { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .word-card.flipped { box-shadow: 0 4px 12px rgba(0,0,0,0.15); color: white; }
+        @media (max-width: 600px) { h1 { font-size: 24px; } .word-card { font-size: 14px; padding: 1rem 0.75rem; } }
     </style>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Cebuano Words</h1>
+            <button class="reset-button" onclick="resetAll()">↻ Reset</button>
+        </div>
+        <div id="categories"></div>
+    </div>
+
+    <script>
+        const data = {
+            categories: [
+                {id: 'greetings', name: 'Greetings & Phrases', color: '#FF6B6B', words: [
+                    {e: "What's your job?", c: 'Unsay imong trabaho?'}, {e: "What's wrong?", c: 'Unsay problema?'}, {e: 'Are you sure?', c: 'Sure ka?'}, {e: 'Are you ready?', c: 'Ready naka?'}, {e: 'Forgive me', c: 'Pasaylo-a ko'}, {e: 'See you later', c: 'Kita ta sa sunod'}, {e: 'Good luck', c: 'Maayong swerte'}
+                ]},
+                {id: 'family', name: 'Family Members', color: '#4ECDC4', words: [
+                    {e: 'Grandparent', c: 'Apohang'}, {e: 'Aunt', c: 'Iyaan (tiya)'}, {e: 'Uncle', c: 'Uyoan (tiyo)'}, {e: 'Cousin', c: 'Ig-agaw'}, {e: 'Older sibling', c: 'Magulang'}, {e: 'Younger sibling', c: 'Manghody'}, {e: 'Friend', c: 'Higala'}
+                ]},
+                {id: 'house', name: 'House & Building', color: '#95E1D3', words: [
+                    {e: 'Window', c: 'Bentana'}, {e: 'Door', c: 'Pwerта'}, {e: 'Wall', c: 'Dingding'}, {e: 'Stair', c: 'Hagdan'}, {e: 'Porch', c: 'Balkon'}, {e: 'Floor', c: 'Salog'}, {e: 'Roof', c: 'Atop'}, {e: 'Kitchen', c: 'Kusina'}
+                ]},
+                {id: 'food', name: 'Food & Dining', color: '#F9A825', words: [
+                    {e: 'Meat', c: 'Karne'}, {e: 'Cheese', c: 'Keso'}, {e: 'Soup', c: 'Sabaw'}, {e: 'Bread', c: 'Tinapay'}, {e: 'Breakfast', c: 'Pamahaw'}, {e: 'Lunch', c: 'Paniudto'}, {e: 'Dinner', c: 'Panihapon'}, {e: 'Coffee', c: 'Kape'}
+                ]},
+                {id: 'vegetables', name: 'Fruits & Vegetables', color: '#38B000', words: [
+                    {e: 'Potatoes', c: 'Patatas'}, {e: 'Sweet potato', c: 'Kamote'}, {e: 'Tomatoes', c: 'Kamatiso'}, {e: 'Onions', c: 'Sibuyaso'}, {e: 'Apples', c: 'Mansana'}, {e: 'Bananas', c: 'Sagin'}, {e: 'Mango', c: 'Mango'}, {e: 'Pineapple', c: 'Pina'}
+                ]},
+                {id: 'animals', name: 'Animals & Insects', color: '#FF8C42', words: [
+                    {e: 'Horse', c: 'Kabayo'}, {e: 'Goat', c: 'Kanding'}, {e: 'Duck', c: 'Itik'}, {e: 'Fly', c: 'Langaw'}, {e: 'Mosquito', c: 'Lamok'}, {e: 'Bee', c: 'Buyog'}, {e: 'Frog', c: 'Baki'}, {e: 'Chicken', c: 'Manok'}
+                ]},
+                {id: 'verbs', name: 'Common Verbs', color: '#A355FF', words: [
+                    {e: 'To study', c: 'Magtuon'}, {e: 'To sleep', c: 'Matulog'}, {e: 'To teach', c: 'Magtudlo'}, {e: 'To walk', c: 'Maglakaw'}, {e: 'To arrive', c: 'Moabot'}, {e: 'To attend', c: 'Motambong'}, {e: 'To leave', c: 'Moadto'}, {e: 'To come back', c: 'Mobalik'}
+                ]},
+                {id: 'colors', name: 'Colors', color: '#FF1493', words: [
+                    {e: 'White', c: 'Puti'}, {e: 'Black', c: 'Itom'}, {e: 'Red', c: 'Pula'}, {e: 'Blue', c: 'Asul'}, {e: 'Yellow', c: 'Dilaw'}, {e: 'Purple', c: 'Lila'}, {e: 'Orange', c: 'Kahel'}, {e: 'Green', c: 'Berde'}
+                ]},
+                {id: 'body', name: 'Body Parts', color: '#E74C3C', words: [
+                    {e: 'Head', c: 'Ulo'}, {e: 'Nose', c: 'Ilong'}, {e: 'Eyes', c: 'Mata'}, {e: 'Ears', c: 'Tainga'}, {e: 'Mouth', c: 'Baba'}, {e: 'Teeth', c: 'Ngipen'}, {e: 'Hand', c: 'Kamay'}, {e: 'Foot', c: 'Paa'}
+                ]},
+                {id: 'numbers', name: 'Numbers', color: '#3498DB', words: [
+                    {e: 'One', c: 'Usa'}, {e: 'Two', c: 'Duha'}, {e: 'Three', c: 'Tulo'}, {e: 'Four', c: 'Upat'}, {e: 'Five', c: 'Lima'}, {e: 'Six', c: 'Anim'}, {e: 'Seven', c: 'Pito'}, {e: 'Eight', c: 'Walo'}
+                ]}
+            ]
+        };
+
+        const flipped = {};
+
+        function toggle(id, idx) {
+            const key = `${id}-${idx}`;
+            flipped[key] = !flipped[key];
+            render();
+        }
+
+        function resetAll() {
+            Object.keys(flipped).forEach(k => delete flipped[k]);
+            render();
+        }
+
+        function render() {
+            const html = data.categories.map(cat => `
+                <div class="category-section">
+                    <h2 class="category-title" style="color:${cat.color}">${cat.name}</h2>
+                    <div class="words-grid">
+                        ${cat.words.map((w, i) => {
+                            const key = `${cat.id}-${i}`;
+                            const isFlipped = flipped[key];
+                            return `<button class="word-card ${isFlipped ? 'flipped' : ''}" 
+                                style="border-color:${cat.color};background:${isFlipped ? cat.color : 'white'};color:${isFlipped ? 'white' : 'inherit'}"
+                                onclick="toggle('${cat.id}', ${i})">${isFlipped ? w.c : w.e}</button>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('categories').innerHTML = html;
+        }
+
+        render();
+    </script>
+</body>
 </html>
