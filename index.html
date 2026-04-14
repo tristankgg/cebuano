@@ -35,6 +35,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            word-spacing: 100vw;
+            padding-right: 3rem;
         }
         .header p { 
             font-size: 0.95rem; 
@@ -422,6 +424,43 @@
         .word-card.flipped.grad-11 { background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%); }
         .word-card.flipped.grad-12 { background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%); }
 
+        /* Footer Section */
+        .footer-section { 
+            margin-top: 3rem;
+            padding: 1.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-section:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .footer-text { 
+            font-size: 0.9rem; 
+            color: #aaa;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        body.light-theme .footer-section { 
+            background: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .footer-section:hover {
+            background: rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        body.light-theme .footer-text { 
+            color: #555;
+        }
+
         @media (max-width: 600px) { 
             .header h1 { font-size: 2rem; }
             .toggle-container { flex-direction: column; gap: 0.8rem; }
@@ -468,6 +507,11 @@
         </div>
 
         <div id="categories"></div>
+
+        <!-- Footer Section -->
+        <div class="footer-section">
+            <p class="footer-text">© April 2026 - Tristan Gallagher</p>
+        </div>
     </div>
 
     <script>
