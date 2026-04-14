@@ -13,6 +13,12 @@
             min-height: 100vh; 
             padding: 1.5rem; 
             color: #fff;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        
+        body.light-theme {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            color: #333;
         }
         .container { max-width: 700px; margin: 0 auto; }
         
@@ -36,7 +42,119 @@
             font-family: 'Inter', sans-serif;
         }
         
-        /* Toggle Switch Container */
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+
+        body.light-theme .theme-toggle {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.2);
+            color: #333;
+        }
+
+        body.light-theme .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Light theme adjustments */
+        body.light-theme .header p { 
+            color: #555; 
+        }
+
+        body.light-theme .toggle-container {
+            background: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .toggle-label {
+            color: #333;
+        }
+
+        body.light-theme .slider {
+            background-color: rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(0, 0, 0, 0.2);
+        }
+
+        body.light-theme .toggle-text {
+            color: #333;
+        }
+
+        body.light-theme .nav-menu {
+            background: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .nav-btn {
+            background: rgba(0, 0, 0, 0.08);
+            color: #333;
+            border: 2px solid rgba(0, 0, 0, 0.15);
+        }
+
+        body.light-theme .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.12);
+            border-color: rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-theme .nav-btn.active {
+            background: linear-gradient(135deg, #FF6B9D 0%, #FF8066 100%);
+            color: white;
+        }
+
+        body.light-theme .category-section { 
+            background: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .category-section:hover {
+            background: rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        body.light-theme .category-title { 
+            color: #333;
+        }
+
+        body.light-theme .word-card { 
+            background: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        body.light-theme .word-card:hover:not(.flipped) { 
+            background: rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        body.light-theme .section-btn {
+            background: rgba(0, 0, 0, 0.1);
+            color: #333;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+        }
+
+        /* Toggle Container */
         .toggle-container {
             display: flex;
             align-items: center;
@@ -324,6 +442,9 @@
 </head>
 <body>
     <div class="container">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
+
         <div class="header" id="header">
             <h1>Cebuano Vocabulary</h1>
             <p style="font-size: 0.9rem; color: #888; margin-top: 0.3rem; margin-bottom: 1rem;">by Tristan Gallagher</p>
@@ -353,6 +474,41 @@
         const gradients = ['grad-1', 'grad-2', 'grad-3', 'grad-4', 'grad-5', 'grad-6', 'grad-7', 'grad-8', 'grad-9', 'grad-10', 'grad-11', 'grad-12'];
         
         let languageMode = 'en'; // 'en' = English first, 'ce' = Cebuano first
+        let isDarkTheme = true;
+
+        function toggleTheme() {
+            isDarkTheme = !isDarkTheme;
+            const body = document.body;
+            const button = document.querySelector('.theme-toggle');
+            
+            if (isDarkTheme) {
+                body.classList.remove('light-theme');
+                button.textContent = '🌙';
+                button.title = 'Switch to light theme';
+            } else {
+                body.classList.add('light-theme');
+                button.textContent = '☀️';
+                button.title = 'Switch to dark theme';
+            }
+            
+            localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const button = document.querySelector('.theme-toggle');
+            
+            if (savedTheme === 'light') {
+                isDarkTheme = false;
+                document.body.classList.add('light-theme');
+                button.textContent = '☀️';
+                button.title = 'Switch to dark theme';
+            } else {
+                isDarkTheme = true;
+                button.textContent = '🌙';
+                button.title = 'Switch to light theme';
+            }
+        }
         
         const data = {
             categories: [
@@ -490,6 +646,7 @@
         }
 
         buildNav();
+        loadTheme();
         render();
     </script>
 </body>
