@@ -142,8 +142,28 @@
             border-color: rgba(0, 0, 0, 0.15);
         }
 
-        .header-content {
-            flex: 1;
+        /* Header Title with Flag */
+        .header-title-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-flag {
+            width: 50px;
+            height: auto;
+            max-height: 40px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .header-flag:hover {
+            transform: scale(1.05);
+        }
+
+        body.light-theme .header-flag {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .header-right {
@@ -657,6 +677,48 @@
             border-color: rgba(0, 0, 0, 0.1);
         }
 
+        /* Footer Image Container */
+        .footer-image-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        /* Return Button */
+        .footer-return-button {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 107, 157, 0.2);
+            color: #FF6B9D;
+            border: 2px solid rgba(255, 107, 157, 0.4);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-return-button:hover {
+            background: rgba(255, 107, 157, 0.3);
+            border-color: rgba(255, 107, 157, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 157, 0.2);
+        }
+
+        body.light-theme .footer-return-button {
+            background: rgba(255, 107, 157, 0.1);
+            color: #FF6B9D;
+            border-color: rgba(255, 107, 157, 0.3);
+        }
+
+        body.light-theme .footer-return-button:hover {
+            background: rgba(255, 107, 157, 0.15);
+            border-color: rgba(255, 107, 157, 0.5);
+        }
+
         .footer-text {
             font-size: 0.95rem;
             color: #aaa;
@@ -706,7 +768,10 @@
         <!-- Header with Theme Toggle -->
         <div class="header-container">
             <div class="header-content" id="header">
-                <h1>Cebuano Vocabulary</h1>
+                <div class="header-title-section">
+                    <img src="flag.png" alt="Philippine Flag" class="header-flag">
+                    <h1>Cebuano Vocabulary</h1>
+                </div>
                 <p>Learn essential Cebuano words</p>
             </div>
             <div class="header-right">
@@ -743,7 +808,10 @@
         <!-- Footer Section -->
         <div class="footer-section">
             <div class="footer-content">
-                <img src="ailyn.png" alt="Ailyn Belle" class="footer-image">
+                <div class="footer-image-container">
+                    <img src="ailyn.png" alt="Ailyn Belle" class="footer-image">
+                    <button class="footer-return-button" onclick="returnToTop()">Return</button>
+                </div>
                 <p class="footer-text">This website has been proof read by our Native Cebuano Speaker <strong>Ailyn Belle</strong> • Website Developed by Tristan Gallagher © April 2026</p>
             </div>
         </div>
