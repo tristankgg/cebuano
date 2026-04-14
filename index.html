@@ -145,17 +145,17 @@
         /* Header Title with Flag */
         .header-title-section {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1rem;
         }
 
         .header-flag {
             width: 50px;
-            height: auto;
-            max-height: 40px;
+            height: 50px;
             border-radius: 4px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease;
+            flex-shrink: 0;
         }
 
         .header-flag:hover {
@@ -164,6 +164,10 @@
 
         body.light-theme .header-flag {
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-title {
+            line-height: 1.2;
         }
 
         .header-right {
@@ -742,6 +746,9 @@
 
         @media (max-width: 600px) { 
             .header h1 { font-size: 2rem; }
+            .header-flag { width: 45px; height: 45px; }
+            .header-title-section { align-items: flex-start; gap: 0.8rem; }
+            .header-title { font-size: 1.5rem; max-width: 180px; }
             .header-container { position: relative; flex-direction: column; align-items: flex-start; padding: 1.2rem; padding-right: 5.5rem; }
             .header-content { width: 100%; }
             .header-right { position: absolute; top: 1rem; right: 1rem; flex-direction: column; align-items: center; gap: 0.2rem; }
@@ -769,15 +776,15 @@
         <div class="header-container">
             <div class="header-content" id="header">
                 <div class="header-title-section">
-                    <img src="flag.png" alt="Philippine Flag" class="header-flag">
-                    <h1>Cebuano Vocabulary</h1>
+                    <img src="flag_square.png" alt="Philippine Flag" class="header-flag">
+                    <h1 class="header-title">Cebuano Vocabulary</h1>
                 </div>
                 <p>Learn essential Cebuano words</p>
             </div>
             <div class="header-right">
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
                 <button class="info-button" onclick="scrollToFooter()" title="View credits and info">ⓘ</button>
-                <div class="version-badge">v0.27</div>
+                <div class="version-badge">v0.29</div>
             </div>
         </div>
 
