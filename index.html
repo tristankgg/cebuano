@@ -77,6 +77,42 @@
             border-color: rgba(0, 0, 0, 0.4);
         }
 
+        /* Info Button */
+        .info-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            font-weight: 700;
+            margin-top: 0.4rem;
+        }
+
+        .info-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+
+        body.light-theme .info-button {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.2);
+            color: #333;
+        }
+
+        body.light-theme .info-button:hover {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: rgba(0, 0, 0, 0.4);
+        }
+
         /* Header Container */
         .header-container {
             display: flex;
@@ -671,11 +707,11 @@
         <div class="header-container">
             <div class="header-content" id="header">
                 <h1>Cebuano Vocabulary</h1>
-                <p style="font-size: 0.9rem; color: #888; margin-top: 0.3rem; margin-bottom: 1rem;">by Tristan Gallagher</p>
                 <p>Learn essential Cebuano words</p>
             </div>
             <div class="header-right">
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
+                <button class="info-button" onclick="scrollToFooter()" title="View credits and info">ⓘ</button>
                 <div class="version-badge">v0.27</div>
             </div>
         </div>
@@ -884,6 +920,13 @@
         function returnToTop() {
             const header = document.getElementById('header');
             header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function scrollToFooter() {
+            const footer = document.querySelector('.footer-section');
+            if (footer) {
+                footer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         function resetAll() {
