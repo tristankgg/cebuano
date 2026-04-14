@@ -36,6 +36,80 @@
             font-family: 'Inter', sans-serif;
         }
         
+        /* Toggle Switch Container */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        .toggle-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 70px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
+            border-radius: 34px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #FF6B9D;
+            border-color: #FF8066;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(36px);
+        }
+
+        .toggle-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            min-width: 120px;
+            text-align: center;
+        }
+
         /* Navigation Grid */
         .nav-menu {
             display: grid;
@@ -232,6 +306,7 @@
 
         @media (max-width: 600px) { 
             .header h1 { font-size: 2rem; }
+            .toggle-container { flex-direction: column; gap: 0.8rem; }
             .nav-menu { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; padding: 0.8rem; }
             .nav-btn { padding: 0.8rem; min-height: 95px; font-size: 0.7rem; gap: 0.5rem; }
             .nav-icon { font-size: 1.5rem; }
@@ -255,6 +330,16 @@
             <p>Learn essential Cebuano words</p>
         </div>
 
+        <!-- Toggle Switch -->
+        <div class="toggle-container">
+            <span class="toggle-label">Learning Mode:</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="languageToggle" onchange="toggleLanguageMode()">
+                <span class="slider"></span>
+            </label>
+            <span class="toggle-text" id="toggleText">ENGLISH → CEBUANO</span>
+        </div>
+
         <div class="nav-menu" id="navMenu"></div>
 
         <div class="controls">
@@ -266,6 +351,8 @@
 
     <script>
         const gradients = ['grad-1', 'grad-2', 'grad-3', 'grad-4', 'grad-5', 'grad-6', 'grad-7', 'grad-8', 'grad-9', 'grad-10', 'grad-11', 'grad-12'];
+        
+        let languageMode = 'en'; // 'en' = English first, 'ce' = Cebuano first
         
         const data = {
             categories: [
@@ -310,6 +397,15 @@
 
         const flipped = {};
         let activeSection = null;
+
+        function toggleLanguageMode() {
+            const toggle = document.getElementById('languageToggle');
+            const toggleText = document.getElementById('toggleText');
+            languageMode = toggle.checked ? 'ce' : 'en';
+            toggleText.textContent = languageMode === 'en' ? 'ENGLISH → CEBUANO' : 'CEBUANO → ENGLISH';
+            Object.keys(flipped).forEach(k => delete flipped[k]);
+            render();
+        }
 
         function buildNav() {
             const navMenu = document.getElementById('navMenu');
@@ -374,8 +470,18 @@
                             const key = `${cat.id}-${i}`;
                             const isFlipped = flipped[key];
                             const gradClass = isFlipped ? gradients[cat.gradIdx] : '';
+                            
+                            let displayWord, revealWord;
+                            if (languageMode === 'en') {
+                                displayWord = isFlipped ? w.c : w.e;
+                                revealWord = isFlipped ? w.e : w.c;
+                            } else {
+                                displayWord = isFlipped ? w.e : w.c;
+                                revealWord = isFlipped ? w.c : w.e;
+                            }
+                            
                             return `<button class="word-card ${isFlipped ? 'flipped ' + gradClass : ''}" 
-                                onclick="toggle('${cat.id}', ${i})">${isFlipped ? w.c : w.e}</button>`;
+                                onclick="toggle('${cat.id}', ${i})">${displayWord}</button>`;
                         }).join('')}
                     </div>
                 </div>
