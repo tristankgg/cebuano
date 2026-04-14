@@ -592,15 +592,13 @@
         /* Footer Content */
         .footer-content {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
 
         body.light-theme .footer-content {
-            border-bottom-color: rgba(0, 0, 0, 0.1);
         }
 
         .footer-image {
@@ -628,6 +626,7 @@
             color: #aaa;
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
+            text-align: left;
         }
 
         .footer-text strong {
@@ -640,14 +639,7 @@
         }
 
         .footer-copyright {
-            font-size: 0.8rem;
-            color: #666;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body.light-theme .footer-copyright {
-            color: #999;
+            display: none;
         }
 
         @media (max-width: 600px) { 
@@ -684,7 +676,7 @@
             </div>
             <div class="header-right">
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
-                <div class="version-badge">v0.26</div>
+                <div class="version-badge">v0.27</div>
             </div>
         </div>
 
@@ -716,9 +708,8 @@
         <div class="footer-section">
             <div class="footer-content">
                 <img src="ailyn.png" alt="Ailyn Belle" class="footer-image">
-                <p class="footer-text">The website was built and proof read by <strong>Ailyn Belle</strong><br>Our Native Cebuano Speaker</p>
+                <p class="footer-text">This website has been proof read by our Native Cebuano Speaker <strong>Ailyn Belle</strong> • Website Developed by Tristan Gallagher © April 2026</p>
             </div>
-            <p class="footer-copyright">© April 2026 - Tristan Gallagher</p>
         </div>
     </div>
 
