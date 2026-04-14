@@ -277,7 +277,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1.2rem;
+            gap: 1rem;
             margin-bottom: 2rem;
             padding: 1rem;
             background: rgba(255, 255, 255, 0.05);
@@ -304,10 +304,6 @@
             border-radius: 8px;
             border: 2px solid rgba(255, 107, 157, 0.3);
             font-family: 'Poppins', sans-serif;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         body.light-theme .global-counter-container {
@@ -476,23 +472,6 @@
         .reset-button:hover { 
             transform: translateY(-2px);
             box-shadow: 0 12px 28px rgba(255, 107, 157, 0.4);
-        }
-
-        /* Inline reset button variant */
-        .reset-button.reset-inline {
-            padding: 0.5rem 1.2rem;
-            font-size: 0.85rem;
-            box-shadow: none;
-            background: linear-gradient(135deg, #FF6B9D 0%, #FF8066 100%);
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .reset-button.reset-inline:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
         }
 
         /* Category Section Boxes */
@@ -831,11 +810,10 @@
             </div>
         </div>
 
-        <!-- Global Word Counter with Master Reset -->
+        <!-- Global Word Counter -->
         <div class="global-counter-container">
-            <span class="global-counter-label">Selected:</span>
+            <span class="global-counter-label">Total Words Selected:</span>
             <div class="global-counter-display" id="globalCounter">0</div>
-            <button class="reset-button reset-inline" onclick="resetAll()">↻ Reset</button>
         </div>
 
         <!-- Toggle Switch -->
@@ -850,6 +828,10 @@
 
         <div class="nav-menu" id="navMenu"></div>
 
+        <div class="controls">
+            <button class="reset-button" onclick="resetAll()">↻ Master Reset</button>
+        </div>
+
         <div id="categories"></div>
 
         <!-- Footer Section -->
@@ -861,7 +843,7 @@
                 </div>
                 <p class="footer-text">This website has been proof read by our Native Cebuano Speaker <strong>Ailyn Arpon</strong> • Website Developed by Tristan Gallagher © April 2026</p>
             </div>
-            <div class="footer-version">v0.32</div>
+            <div class="footer-version">v0.34</div>
         </div>
     </div>
 
@@ -929,7 +911,7 @@
                     {e: 'Office', c: 'opisina'}, {e: 'Cinema', c: 'sinehan'}, {e: 'Park', c: 'parke'}, {e: 'Beach', c: 'bay-bay-on'}, {e: 'Swimming pool', c: 'lun-ou-ya-nan'}, {e: 'Restaurant', c: 'kun-un-nan'}, {e: 'Play Ground', c: 'dula-anan'}, {e: 'Shop', c: 'tin-da-han'}, {e: 'Market', c: 'mer-kado'}, {e: 'Airport', c: 'tug-ba-ha-nan'}, {e: 'Forrest', c: 'ka-ka-hou-yan'}, {e: 'Jungle', c: 'ka-la-san-gan'}, {e: 'Desert', c: 'des-verto'}, {e: 'Ocean', c: 'da-gat'}, {e: 'City', c: 'siyudad'}
                 ]},
                 {id: 'animals', name: 'Animals & Insects', icon: '🦁', gradIdx: 7, words: [
-                    {e: 'Chicken', c: 'ma-nok'}, {e: 'Cow', c: 'Ba-ka'}, {e: 'Horse', c: 'Ka-bayo'}, {e: 'Snake', c: 'bi-tin'}, {e: 'Bird', c: 'lang-gam'}, {e: 'Sheep', c: 'Kar-nero'}, {e: 'Goat', c: 'Kan-Ding'}, {e: 'Mosquito', c: 'La-mok'}, {e: 'Fly', c: 'Langaw'}, {e: 'Duck', c: 'Pato'}
+                    {e: 'Dog', c: 'Iro'}, {e: 'Cat', c: 'Iring'}, {e: 'Pig', c: 'Baboy'}, {e: 'Chicken', c: 'Manok'}, {e: 'Carabao (Water Buffalo)', c: 'Kabaw'}, {e: 'Cow', c: 'Baka'}, {e: 'Horse', c: 'Kabayo'}, {e: 'Goat', c: 'Kanding'}, {e: 'Bird', c: 'Langgam'}, {e: 'Fish', c: 'Isda'}, {e: 'Snake', c: 'Halas'}, {e: 'Butterfly', c: 'Alibangbang'}, {e: 'Rat/Mouse', c: 'Ilaga'}, {e: 'Monkey', c: 'Unggoy'}, {e: 'Spider', c: 'Kaka'}, {e: 'House Lizard/Gecko', c: 'Butiki'}, {e: 'Fly (Insect)', c: 'Langaw'}, {e: 'Mosquito', c: 'Lamok'}, {e: 'Duck', c: 'Pato'}, {e: 'Caterpillar/Worm', c: 'Ulod'}
                 ]},
                 {id: 'weather', name: 'Weather', icon: '⛅', gradIdx: 8, words: [
                     {e: 'Weather', c: 'Panahon'}, {e: 'Rain', c: 'Ulan'}, {e: 'Hot', c: 'Init'}, {e: 'Cold', c: 'Tugnaw'}, {e: 'Storm', c: 'Bagyo'}, {e: 'Wind', c: 'Hangin'}, {e: 'Fog', c: 'Gabon'}, {e: 'Flood', c: 'Baha'}, {e: 'Lightning', c: 'Kilat'}, {e: 'Thunder', c: 'Dalugdog'}, {e: 'Cloudy', c: 'Gabonon'}, {e: 'Sunny', c: 'Silaw'}, {e: 'Drizzle', c: 'Taligsik'}, {e: 'Showers', c: 'Ulan-ulan'}, {e: 'Breeze', c: 'Huyuhoy'}, {e: 'Heavy rain', c: 'Tigiti'}, {e: 'Humid', c: 'Alimuot'}, {e: 'Drought', c: 'Tughabang'}, {e: 'Rainbow', c: 'Balangaw'}, {e: 'Earthquake', c: 'Linog'}
@@ -941,7 +923,7 @@
                     {e: 'Red', c: 'Pula'}, {e: 'Blue', c: 'Asul'}, {e: 'Yellow', c: 'Dilaw'}, {e: 'Green', c: 'Berde'}, {e: 'Orange', c: 'Kahel'}, {e: 'Purple', c: 'Lila'}, {e: 'Pink', c: 'Puti-Pula'}, {e: 'Black', c: 'Itom'}, {e: 'White', c: 'Puti'}
                 ]},
                 {id: 'emotions', name: 'Emotions & States', icon: '😊', gradIdx: 11, words: [
-                    {e: 'Happy', c: 'Masaya'}, {e: 'Sad', c: 'Lungag'}, {e: 'Angry', c: 'Galit'}, {e: 'Tired', c: 'Lubang'}, {e: 'Afraid', c: 'Takot'}, {e: 'Excited', c: 'Kugihan'}, {e: 'Sleepy', c: 'Antok'}
+                    {e: 'Happy', c: 'Ma-li-pa-yon'}, {e: 'Sad', c: 'Ma-sub-anon'}, {e: 'Angry', c: 'Na-su-kô'}, {e: 'Afraid', c: 'Na-had-lok'}, {e: 'Sleepy', c: 'Du-ká'}, {e: 'Tired', c: 'Ka-poy'}, {e: 'Excited', c: 'Nag-hinam-hinam'}
                 ]},
                 {id: 'bodyparts', name: 'Body Parts', icon: '👤', gradIdx: 0, words: [
                     {e: 'Head', c: 'Ulo'}, {e: 'Face', c: 'Nawong'}, {e: 'Eye', c: 'Mata'}, {e: 'Nose', c: 'Ilong'}, {e: 'Ear', c: 'Dalunggan'}, {e: 'Mouth', c: 'Baba'}, {e: 'Tooth', c: 'Ngipon'}, {e: 'Neck', c: 'Liog'}, {e: 'Shoulder', c: 'Abaga'}, {e: 'Arm', c: 'Bukton'}, {e: 'Elbow', c: 'Siko'}, {e: 'Hand', c: 'Kamot'}, {e: 'Finger', c: 'Tudlo'}, {e: 'Fingernail', c: 'Kuko'}, {e: 'Chest', c: 'Dughan'}, {e: 'Stomach', c: 'Tiyan'}, {e: 'Back', c: 'Likod'}, {e: 'Waist', c: 'Hawak'}, {e: 'Knee', c: 'Tuhod'}, {e: 'Foot', c: 'Tiil'}
@@ -1083,7 +1065,7 @@
                                 revealWord = isFlipped ? w.c : w.e;
                             }
                             
-                            return `<button class="word-card ${isFlipped ? 'flipped ' + gradClass : ''}" 
+                            return `<button class="word-card ${isFlipped ? 'flipped ' + gradClass : ''}\" 
                                 onclick="toggle('${cat.id}', ${i})">${displayWord}</button>`;
                         }).join('')}
                     </div>
