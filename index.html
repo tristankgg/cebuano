@@ -44,19 +44,20 @@
         
         /* Theme Toggle Button */
         .theme-toggle {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.2);
             color: #fff;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
             flex-shrink: 0;
+            margin-top: -0.8rem;
         }
 
         .theme-toggle:hover {
@@ -107,6 +108,33 @@
 
         .header-content {
             flex: 1;
+        }
+
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            justify-content: flex-start;
+            padding-top: 0.2rem;
+        }
+
+        .version-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        body.light-theme .version-badge {
+            color: #666;
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.1);
         }
 
         /* Light theme adjustments */
@@ -541,7 +569,10 @@
                 <p style="font-size: 0.9rem; color: #888; margin-top: 0.3rem; margin-bottom: 1rem;">by Tristan Gallagher</p>
                 <p>Learn essential Cebuano words</p>
             </div>
-            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
+            <div class="header-right">
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
+                <div class="version-badge">v0.21</div>
+            </div>
         </div>
 
         <!-- Toggle Switch -->
