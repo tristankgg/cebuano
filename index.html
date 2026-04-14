@@ -132,3 +132,90 @@
             <h1>Cebuano Vocabulary</h1>
             <p>Learn essential Cebuano words</p>
         </div>
+
+        <div class="controls">
+            <button class="reset-button" onclick="resetAll()">↻ Reset All</button>
+        </div>
+
+        <div id="categories"></div>
+    </div>
+
+    <script>
+        const gradients = ['grad-1', 'grad-2', 'grad-3', 'grad-4', 'grad-5', 'grad-6', 'grad-7', 'grad-8', 'grad-9', 'grad-10', 'grad-11', 'grad-12'];
+        
+        const data = {
+            categories: [
+                {id: 'greetings', name: 'Greetings & Manners', gradIdx: 0, words: [
+                    {e: 'Hello', c: 'Kumusta'}, {e: 'How are you?', c: 'Kumusta ka'}, {e: 'Good Morning', c: 'Maayong Buntag'}, {e: 'Good Afternoon', c: 'Maayong Hapon'}, {e: 'Good Night', c: 'Maayong Gabii'}, {e: 'Thank you', c: 'salamat'}, {e: 'Please', c: 'palihog'}, {e: 'Yes', c: 'Oo'}, {e: 'No', c: 'Dili'}, {e: 'Yes Please', c: 'Oo Palihug'}, {e: 'No Thank You', c: 'Dili Salamat'}, {e: 'I want', c: 'Gusto Ko'}
+                ]},
+                {id: 'sentences', name: 'Feelings & Romance', gradIdx: 1, words: [
+                    {e: 'I Love you', c: 'Gihigugma ko ikaw'}, {e: 'My Love', c: 'palangga ko'}, {e: 'Very Cute', c: 'Cute Kaayo'}, {e: 'Very Tasty', c: 'Lami Kaayo'}, {e: 'I want you to hug me', c: 'Gusto ko mo gakos nimo'}, {e: 'Handsome', c: 'Gwapo'}, {e: 'Beautiful', c: 'Gwapa'}
+                ]},
+                {id: 'numbers', name: 'Numbers', gradIdx: 2, words: [
+                    {e: 'One', c: 'usa'}, {e: 'Two', c: 'duha'}, {e: 'Three', c: 'tulo'}, {e: 'Four', c: 'upat'}, {e: 'Five', c: 'lima'}, {e: 'Six', c: 'unom'}, {e: 'Seven', c: 'pito'}, {e: 'Eight', c: 'walo'}, {e: 'Nine', c: 'siyam'}, {e: 'Ten', c: 'napulo'}, {e: 'Eleven', c: 'napulo-og-usa'}
+                ]},
+                {id: 'days', name: 'Days of the Week', gradIdx: 3, words: [
+                    {e: 'Monday', c: 'lunes'}, {e: 'Tuesday', c: 'martes'}, {e: 'Wednesday', c: 'miyerkules'}, {e: 'Thursday', c: 'huwebes'}, {e: 'Friday', c: 'biyernes'}, {e: 'Saturday', c: 'sabado'}, {e: 'Sunday', c: 'domingo'}
+                ]},
+                {id: 'months', name: 'Months', gradIdx: 4, words: [
+                    {e: 'January', c: 'Enero'}, {e: 'February', c: 'Pebrero'}, {e: 'March', c: 'Marso'}, {e: 'April', c: 'Abril'}, {e: 'May', c: 'Mayo'}, {e: 'June', c: 'Hunyo'}, {e: 'July', c: 'Hulyo'}, {e: 'August', c: 'Agosto'}, {e: 'September', c: 'Septyembre'}, {e: 'October', c: 'Oktubre'}, {e: 'November', c: 'Nobyembre'}, {e: 'December', c: 'Disyembre'}
+                ]},
+                {id: 'food', name: 'Food & Drinks', gradIdx: 5, words: [
+                    {e: 'Water', c: 'Tubig'}, {e: 'Pasta', c: 'Pasta'}, {e: 'Sandwich', c: 'Sandwich'}, {e: 'Fish', c: 'is-da'}, {e: 'Pizza', c: 'Pizza'}, {e: 'Meat', c: 'Karne'}, {e: 'Fruit', c: 'fruit-as'}, {e: 'Bread', c: 'Bun'}, {e: 'Yoghurt', c: 'Yoghurt'}, {e: 'Apple', c: 'man-sa-nas'}, {e: 'Bananas', c: 'sa-ging'}, {e: 'Carrots', c: 'karot'}, {e: 'Cheese', c: 'keso'}, {e: 'Potatoes', c: 'patatas'}, {e: 'Soup', c: 'sa-baw'}, {e: 'Vegetable', c: 'gula'}
+                ]},
+                {id: 'places', name: 'Places & Locations', gradIdx: 6, words: [
+                    {e: 'Office', c: 'opisina'}, {e: 'Cinema', c: 'sinehan'}, {e: 'Park', c: 'parke'}, {e: 'Beach', c: 'bay-bay-on'}, {e: 'Swimming pool', c: 'lun-ou-ya-nan'}, {e: 'Restaurant', c: 'kun-un-nan'}, {e: 'Play Ground', c: 'dula-anan'}, {e: 'Shop', c: 'tin-da-han'}, {e: 'Market', c: 'mer-kado'}, {e: 'Airport', c: 'tug-ba-ha-nan'}, {e: 'Forrest', c: 'ka-ka-hou-yan'}, {e: 'Jungle', c: 'ka-la-san-gan'}, {e: 'Desert', c: 'des-verto'}, {e: 'Ocean', c: 'da-gat'}, {e: 'City', c: 'siyudad'}
+                ]},
+                {id: 'animals', name: 'Animals & Insects', gradIdx: 7, words: [
+                    {e: 'Chicken', c: 'ma-nok'}, {e: 'Cow', c: 'Ba-ka'}, {e: 'Horse', c: 'Ka-bayo'}, {e: 'Snake', c: 'bi-tin'}, {e: 'Bird', c: 'lang-gam'}, {e: 'Sheep', c: 'Kar-nero'}, {e: 'Goat', c: 'Kan-Ding'}, {e: 'Mosquito', c: 'La-mok'}, {e: 'Fly', c: 'Langaw'}, {e: 'Duck', c: 'Pato'}
+                ]},
+                {id: 'weather', name: 'Weather', gradIdx: 8, words: [
+                    {e: 'Hot', c: 'in-it'}, {e: 'Cold', c: 'bug-naw'}, {e: 'Bright', c: 'hay-ag'}, {e: 'Dark', c: 'ngit-ngit'}
+                ]},
+                {id: 'question', name: 'Question Words', gradIdx: 9, words: [
+                    {e: 'Who?', c: 'kin-sa'}, {e: 'What', c: 'un-sa'}, {e: 'When?', c: 'kanus-a'}, {e: 'Where?', c: 'ar-sa'}, {e: 'Why?', c: 'ng-a-no'}, {e: 'How', c: 'unsa-on'}, {e: 'Maybe', c: 'Ba-sin'}
+                ]},
+                {id: 'colors', name: 'Colors', gradIdx: 10, words: [
+                    {e: 'Red', c: 'Pula'}, {e: 'Blue', c: 'Asul'}, {e: 'Yellow', c: 'Dilaw'}, {e: 'Green', c: 'Berde'}, {e: 'Orange', c: 'Kahel'}, {e: 'Purple', c: 'Lila'}, {e: 'Pink', c: 'Puti-Pula'}, {e: 'Black', c: 'Itom'}, {e: 'White', c: 'Puti'}
+                ]},
+                {id: 'emotions', name: 'Emotions & States', gradIdx: 11, words: [
+                    {e: 'Happy', c: 'Masaya'}, {e: 'Sad', c: 'Lungag'}, {e: 'Angry', c: 'Galit'}, {e: 'Tired', c: 'Lubang'}, {e: 'Afraid', c: 'Takot'}, {e: 'Excited', c: 'Kugihan'}, {e: 'Sleepy', c: 'Antok'}
+                ]}
+            ]
+        };
+
+        const flipped = {};
+
+        function toggle(id, idx) {
+            const key = `${id}-${idx}`;
+            flipped[key] = !flipped[key];
+            render();
+        }
+
+        function resetAll() {
+            Object.keys(flipped).forEach(k => delete flipped[k]);
+            render();
+        }
+
+        function render() {
+            const html = data.categories.map(cat => `
+                <div class="category-section">
+                    <h2 class="category-title">${cat.name}</h2>
+                    <div class="words-grid">
+                        ${cat.words.map((w, i) => {
+                            const key = `${cat.id}-${i}`;
+                            const isFlipped = flipped[key];
+                            const gradClass = isFlipped ? gradients[cat.gradIdx] : '';
+                            return `<button class="word-card ${isFlipped ? 'flipped ' + gradClass : ''}" 
+                                onclick="toggle('${cat.id}', ${i})">${isFlipped ? w.c : w.e}</button>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('categories').innerHTML = html;
+        }
+
+        render();
+    </script>
+</body>
+</html>
