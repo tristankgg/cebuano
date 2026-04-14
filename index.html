@@ -212,6 +212,55 @@
             border: 2px solid rgba(0, 0, 0, 0.2);
         }
 
+        /* Global Counter Display */
+        .global-counter-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        .global-counter-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #fff;
+        }
+
+        .global-counter-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FF6B9D;
+            min-width: 80px;
+            text-align: center;
+            background: rgba(255, 107, 157, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body.light-theme .global-counter-container {
+            background: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .global-counter-label {
+            color: #333;
+        }
+
+        body.light-theme .global-counter-display {
+            color: #FF6B9D;
+            background: rgba(255, 107, 157, 0.05);
+            border-color: rgba(255, 107, 157, 0.2);
+        }
+
         /* Toggle Container */
         .toggle-container {
             display: flex;
@@ -540,11 +589,74 @@
             color: #555;
         }
 
+        /* Footer Content */
+        .footer-content {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-theme .footer-content {
+            border-bottom-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-image {
+            width: 80px;
+            height: 80px;
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            object-fit: cover;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-image:hover {
+            transform: scale(1.05);
+        }
+
+        body.light-theme .footer-image {
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-text {
+            font-size: 0.95rem;
+            color: #aaa;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
+        .footer-text strong {
+            color: #FF6B9D;
+            font-weight: 700;
+        }
+
+        body.light-theme .footer-text strong {
+            color: #FF6B9D;
+        }
+
+        .footer-copyright {
+            font-size: 0.8rem;
+            color: #666;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body.light-theme .footer-copyright {
+            color: #999;
+        }
+
         @media (max-width: 600px) { 
             .header h1 { font-size: 2rem; }
-            .header-container { position: relative; flex-direction: column; align-items: flex-start; padding: 1.2rem; padding-top: 3.5rem; }
-            .header-right { position: absolute; top: 1rem; right: 1.2rem; flex-direction: column; align-items: center; gap: 0.2rem; }
-            .theme-toggle { margin-top: 0; }
+            .header-container { position: relative; flex-direction: column; align-items: flex-start; padding: 1.2rem; padding-right: 5.5rem; }
+            .header-content { width: 100%; }
+            .header-right { position: absolute; top: 1rem; right: 1rem; flex-direction: column; align-items: center; gap: 0.2rem; }
+            .theme-toggle { margin-top: 0; width: 36px; height: 36px; font-size: 1.2rem; }
+            .version-badge { font-size: 0.65rem; padding: 0.2rem 0.5rem; }
             .toggle-container { flex-direction: column; gap: 0.8rem; }
             .nav-menu { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; padding: 0.8rem; }
             .nav-btn { padding: 0.8rem; min-height: 95px; font-size: 0.7rem; gap: 0.5rem; }
@@ -572,8 +684,14 @@
             </div>
             <div class="header-right">
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark theme">🌙</button>
-                <div class="version-badge">v0.22</div>
+                <div class="version-badge">v0.26</div>
             </div>
+        </div>
+
+        <!-- Global Word Counter -->
+        <div class="global-counter-container">
+            <span class="global-counter-label">Total Words Selected:</span>
+            <div class="global-counter-display" id="globalCounter">0</div>
         </div>
 
         <!-- Toggle Switch -->
@@ -596,7 +714,11 @@
 
         <!-- Footer Section -->
         <div class="footer-section">
-            <p class="footer-text">© April 2026 - Tristan Gallagher</p>
+            <div class="footer-content">
+                <img src="ailyn.png" alt="Ailyn Belle" class="footer-image">
+                <p class="footer-text">The website was built and proof read by <strong>Ailyn Belle</strong><br>Our Native Cebuano Speaker</p>
+            </div>
+            <p class="footer-copyright">© April 2026 - Tristan Gallagher</p>
         </div>
     </div>
 
@@ -818,6 +940,10 @@
                 </div>
             `; }).join('');
             document.getElementById('categories').innerHTML = html;
+            
+            // Update global counter
+            const totalFlipped = Object.keys(flipped).length;
+            document.getElementById('globalCounter').textContent = totalFlipped;
         }
 
         buildNav();
