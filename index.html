@@ -361,13 +361,36 @@
             gap: 1rem;
         }
 
+        .category-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex: 1;
+        }
+
         .category-title { 
             font-size: 1.3rem; 
             font-weight: 700; 
             text-transform: uppercase; 
             letter-spacing: 1px;
             color: #fff;
-            flex: 1;
+        }
+
+        .word-counter {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #aaa;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            white-space: nowrap;
+        }
+
+        body.light-theme .word-counter {
+            color: #555;
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.1);
         }
 
         .section-controls {
@@ -670,8 +693,21 @@
             activeSection = id;
             updateNavActive(idx);
             const element = document.getElementById(`section-${id}`);
+            const navBtn = document.querySelectorAll('.nav-btn')[idx];
+            
             if (element) {
                 element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            
+            // Add temporary highlight to the button
+            if (navBtn) {
+                navBtn.style.transition = 'all 0.3s ease';
+                navBtn.classList.add('active');
+                
+                // Remove the active class after 1 second
+                setTimeout(() => {
+                    navBtn.classList.remove('active');
+                }, 1000);
             }
         }
 
@@ -705,10 +741,18 @@
         }
 
         function render() {
-            const html = data.categories.map(cat => `
+            const html = data.categories.map(cat => {
+                // Count flipped cards for this category
+                const flippedCount = Object.keys(flipped).filter(key => key.startsWith(cat.id + '-')).length;
+                const totalWords = cat.words.length;
+                
+                return `
                 <div class="category-section" id="section-${cat.id}">
                     <div class="category-header">
-                        <h2 class="category-title">${cat.icon} ${cat.name}</h2>
+                        <div class="category-title-wrapper">
+                            <h2 class="category-title">${cat.icon} ${cat.name}</h2>
+                            <div class="word-counter">${flippedCount}/${totalWords}</div>
+                        </div>
                         <div class="section-controls">
                             <button class="section-btn" onclick="resetSection('${cat.id}')" title="Reset this section">↻</button>
                             <button class="section-btn" onclick="returnToTop()" title="Return to top">↑</button>
@@ -734,7 +778,7 @@
                         }).join('')}
                     </div>
                 </div>
-            `).join('');
+            `; }).join('');
             document.getElementById('categories').innerHTML = html;
         }
 
